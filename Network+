@@ -1,57 +1,54 @@
 ## 1.0 Networking Concepts
 ### 1.1 Explain concepts related to the Open Systems Interconnection
-(OSI) reference model.
+(OSI) reference model - Open Systems Interconnection 
 All People Seem To Need Data Processing
-• Layer 1 - Physical - Cables, fiber, and the signal itself
-• Layer 2 - Data link - DLC (MAC - Media Access Control) address, EUI (Extended Unique Identifier (EUI-48,64), Switch)
-• Layer 3 - Network - Routing layer (IP - Internet Protocol), Router, Packet
-• Layer 4 - Transport - TCP/UDP
-• Layer 5 - Session - Communication management between devices (start/stop/restart)
-• Layer 6 - Presentation - Character encoding (SSL/TLS)
-• Layer 7 - Application - Your eyes
-### 1.2 Compare and contrast networking appliances, applications,
-and functions.
+• Layer 1 - Physical - Electrical signals - Signaling, cabling, connectors
+• Layer 2 - Data link - "switching" layer - Ethernet, DLC (Data Link Control) - MAC (Media Access Control)
+• Layer 3 - Network - "routing" layer - IP Encapsulation 
+• Layer 4 - Transport - "post office" layer - TCP/UDP - TCP Encapsulation
+• Layer 5 - Session - Communication management between devices (start/stop/restart) - control protocols, tunneling protocols, link the presentation to the transport
+• Layer 6 - Presentation - Character encoding (SSL/TLS) - application encryption (often combined with Application layer)
+• Layer 7 - Application - The layer we see (HTTP, FTP, DNS, POP3) - https://mail.google.com
+### 1.2 Compare and contrast networking appliances, applications, and functions.
 • Physical and virtual appliances
-- Router - OSI layer 3
-- Switch - OSI layer 2 
-- Firewall - Traditional vs NGFW (Layer 3 devices (router)) - NAT, Dynamic Routing
+- Router - OSI layer 3 - routes traffic between IP subnets, routers inside of switches sometimes called "layer 3 switches"
+- Switch - OSI layer 2 - bridging done in hardware (ASIC - Application specific integrated circuit) - forwards traffic based on data link address
+- Firewall - Traditional vs NGFW (Layer 3 devices (router)) - filter traffic by port number or application, encrypts traffic (VPN between sites), NAT (network access translation), dynamic routing
 - Intrusion detection system
-(IDS)/intrusion prevention
+(IDS)/intrusion prevention 
 system (IPS) - Watch network traffic (alert buffer overflows, XSS, etc)
-- Load balancer - fault tolerance, caching, SSL/TCP offload
-- Proxy - Receives user requests and sends request on their behalf - useful for caching information, access control, URL filtering, content scanning
-- Network-attached storage (NAS) - File-level access
-- Storage area network (SAN) - Very efficient reading and writing (block-level access)
+- Load balancer - distribute the load (multiple servers), fault tolerance (server outages have no effect, fast convergence), TCP offload (protocol overhead), SSL/TCP offload (encryption/decryption), caching (fast response), prioritization (QoS), content switching (application-centric balancing)
+- Proxy - Sits between users and external network, receives user requests and sends request on their behalf - useful for caching information, access control, URL filtering, content scanning
+- Network-attached storage (NAS) - Connect shared storage device across network, file-level access
+- Storage area network (SAN) - Block-level access, very efficient reading and writing, looks and feels like a local storage device
 - Wireless
-o Access point (AP) - Layer 2 router and access point in single device
+o Access point (AP) - Layer 2 device, a bridge - extends wired network onto wireless network, not a wireless router (wireless router is a router + access point in single device) 
 o Controller - centralized management of access points 
 • Applications
-- Content delivery network (CDN) - speed up process off time to get data from one place to another (geographically distributed caching servers)
+- Content delivery network (CDN) - speed up process of time to get data from one place to another (geographically distributed caching servers - duplicate data, users gets data from local server)
 • Functions
-- Virtual private network (VPN) - secure private data traversing public network. Concentrator/head-end - encryption/decryption access device
-- Quality of service (QoS) - traffic shaping, packet shaping, control bandwitch usage/data rates
-- Time to live (TTL) - how long should data be available? Tell system when to stop
+- Virtual private network (VPN) - secure private data traversing public network (encrypted communication on insecure medium) Concentrator/head-end encryption/decryption access device (often integrated into firewall) - many deployment options (specialized cryptographic hardware/sofware-based options available)
+- Quality of service (QoS) - traffic shaping, packet shaping, control bandwitch usage/data rates - set important applications to havve higher priorities than other apps
+- Time to live (TTL) - how long should data be available? Tell system when to stop -USES: drop packet caught in a loop, clear a cache - TTL macOS/Linux is 64 hops, TTL Windows is 128 hops
 ### 1.3 Summarize cloud concepts and connectivity options.
-• Network functions virtualization
-(NFV) - replace physical network devices with virtual versions
-• Virtual private cloud (VPC) - pool of resources created in a public cloud - connected with transit gateway
-• Network security groups - assign security rule to specific VNIC - more granularity/control
+• Network functions virtualization (NFV) - replace physical network devices with virtual versions - manage from hypervisor 
+• Virtual private cloud (VPC) - pool of resources created in a public cloud - connected with transit gateway ("cloud router")
+• Network security groups - assign security rule to specific VNIC - more granularity/control - firewall for the cloud (control inbound/outbound traffic flows) 
 • Network security lists - assign security rule to an entire IP subnet (very broad)
-• Cloud gateways
-- Internet gateway
-- Network address translation
-(NAT) gateway
+• Cloud gateways 
+- Internet gateway - connects users on the internet
+- Network address translation (NAT) gateway - private cloud subnets connect to external resources (external)
 • Cloud connectivity options
-- VPN
-- Direct Connect
+- VPN - site-to-site VPN through the internet
+- Direct Connect - VPC Endpoint (between cloud provider networks)
 • Deployment models
-- Public
-- Private
-- Hybrid
+- Public - available to everyone over the internet
+- Private - virtualized local data center
+- Hybrid - mix of public and private
 • Service models
-- Software as a service (SaaS) - on-demand software (no local installation) - centralized management of data and applications
-- Infrastructure as a service (IaaS) - outsource equipment (you're responsible for management and security)
-- Platform as a service (PaaS) - no servers, no software, no maintenance team - someone handles platform, you handle development 
+- Software as a service (SaaS) - on-demand software (no local installation) - centralized management of data and applications, a complete application offering
+- Infrastructure as a service (IaaS) - sometimes called HaaS (hardware as a service) outsource equipment (you're responsible for management and security) - data still out there but within your control
+- Platform as a service (PaaS) - no servers, no software, no maintenance team - someone handles platform, you handle development - dont need to control data, people, or infrastructure (put the building blocks together, example: Salesforce) 
 • Scalability
 • Elasticity
 • Multitenancy
@@ -76,47 +73,47 @@ Server Message Block (SMB) 445 - WINDOWS file sharing, printer sharing etc (CIFS
 Syslog 514 - message logging (used with central log collector - SIEM)
 Simple Mail Transfer Protocol Secure (SMTPS) 587
 Lightweight Directory Access Protocol over SSL (LDAPS) 636
-Structured Query Language (SQL) Server 1433
+Structured Query Language (SQL) Server 1433 - databases (Q/R) - collection of information
 Remote Desktop Protocol (RDP) 3389
-Session Initiation Protocol (SIP) 5060/5061
+Session Initiation Protocol (SIP) 5060/5061 - VoIP (voice over IP) setup/manage VoIP sessions, extend voice communication
 
 • Internet Protocol (IP) types
 - Internet Control Message
-Protocol (ICMP)
+Protocol (ICMP) - "Text messaging" for network devices (not used for data transfer) 
 - Transmission Control Protocol
 (TCP)
 - User Datagram Protocol (UDP)
 - Generic Routing Encapsulation
-(GRE)
+(GRE) - "tunnel" between two endpoints (not encrypted)
 - Internet Protocol Security
-(IPSec)
-o Authentication Header (AH)
-o Encapsulating Security
+(IPSec) - OSI layer 3 confidentiality/integrity/anti-replay 
+o Authentication Header (AH) - protocol for IPSec  
+o Encapsulating Security - protocol for IPSec
  Payload (ESP)
-o Internet Key Exchange (IKE)
+o Internet Key Exchange (IKE) - (internet key exchange) - builds SA (security association) - PHASE I uses diffie-hellman to create shared key ISAKMP (internet security association and key management protocol) PHASE II: coordinate ciphers and key sizes and negotiate inbound and outbound SA for IPSec
 • Traffic types
-- Unicast
-- Multicast
-- Anycast
-- Broadcast
+- Unicast - one station sending information to another station (one-to-one) send info between two systems
+- Multicast - one-to-many-of-many (very specialized, difficult to scale across large networks)
+- Anycast - one-to-one-of-many (single destination IP address has multiple paths to two or more endpoints)
+- Broadcast - one-to-all (e.g. routing updates, ARP requests)
 
 ### 1.5 Compare and contrast transmission media and transceivers.
 • Wireless
 - 802.11 standards
-- Cellular
-- Satellite
+- Cellular - 4G and LTE or LTE/A and 5G
+- Satellite - non-terrestrial communication (remote site, difficult-to-network sites) high latency
 • Wired
-- 802.3 standards
-- Single-mode vs. multimode fiber
+- 802.3 standards - all types and standards of ethernet - copper and fiber
+- Single-mode vs. multimode fiber -multimode is short-range communication, inexpensive light source (LED), single-mode - long range (100 km) expensive light source (laser beams)
 - Direct attach copper
 (DAC) cable
-o Twinaxial cable
+o Twinaxial cable - two wires with equal and opposite signals (transmit+, transmit-/receive+, receive-) - keeps single wire constantly moving away from interference
 - Coaxial cable
 - Cable speeds
 - Plenum vs. non-plenum cable
 • Transceivers
 - Protocol
-o Ethernet
+o Ethernet - most popular networking technology in the world
 o Fibre Channel (FC)
 - Form factors
 o Small form-factor pluggable
@@ -147,6 +144,8 @@ o Quad small form-factor
 • Traffic flows
 - North-south
 - East-west
+- Other notes: 
+(Workgroup - set of devices with no security association, Domain - have association)
 
 ### 1.7 Given a scenario, use appropriate IPv4 network addressing
 • Public vs. private
@@ -203,3 +202,94 @@ o Branching
 o Tunneling
 o Dual stack
 o NAT64
+
+## Network Impelementation
+
+### 2.1 Explain characteristics of routing technologies.
+• Static routing - administratively define the routes (easy to configure and manage smaller networks, no overhead, easy to configure on stub networks (only one way out), more secure) No automatic routing
+• Dynamic routing - routers send routes to other routers - no manual route calculations or management, populated automatically, very scalable (some router overhead, requires initial config to work properly)
+- Border Gateway Protocol (BGP) - exterior gateway protocol, connected different AS - three-napkins protocol, popular standard
+- Enhanced Interior Gateway Routing Protocol (EIGRP) - Cisco centric relatively easy to enable to use
+- Open Shortest Path First (OSPF) - common interior gateway protocol (used within single autonomous system (AS)) well-established standard, link-state protocol - routing based on connectivity between routers. Low cost and fastest path wins, identical costs are load balanced
+• Route selection
+- Administrative distance - two routing protocols, two completely different metric calculations (lower -> better)
+- Prefix length - most specific route "wins" - combination of subnet ID and prefix length
+- Metric - each routing protocol has its own way of calculating best route
+• Address translation
+- NAT - network address translation -> public vs private IP address
+- Port address translation (PAT) - NAT overload (translating IP and port number)
+• First Hop Redundancy Protocol
+(FHRP) - computer configured with single default gateway 
+• Virtual IP (VIP) - for default gateway (if router disappears, another one takes its place -> data continues to flow)
+• Subinterfaces - device has physical interface, configure options for each interface -> (some interfaces are not physical -> subinterfaces)
+### 2.2 Given a scenario, configure switching technologies and features.
+• Virtual Local Area Network
+(VLAN) - gruop of devices in same broadcast domain (separated logically instead of physically)
+- VLAN database
+- Switch Virtual Interface (SVI) - layer 3 switches
+• Interface configuration
+- Native VLAN
+- Voice VLAN
+- 802.1Q tagging - connecting VLAN between switches
+- Link aggregation - port bonding (aka LAG) - multiple interfaces act like one big interface
+- Speed - set auto, if manual -> set the same (how fast) 10/100/1000/ 10 gig
+- Duplex - half/full
+• Spanning tree - STP 802.1D - blocking (not forwarding to prevent a loop), listening (not forwarding and cleaning MAC table), learning (not forwarding and adding to MAC table), forwarding (data passes through), disabled RSTP (802.1w) -latest standard
+• Maximum transmission unit (MTU) - maximum IP packet to transmit but not fragment -> fragmentation slows things down
+- Jumbo frames - ethernet frames that are more than 1.5k bytes (can increase to 9k) more efficient
+### 2.3 Given a scenario, select and configure wireless devices and technologies.
+• Channels - groups of frequencies 
+- Channel width
+- Non-overlapping channels
+- Regulatory impacts
+o 802.11h - DFS (dynamic frequency selection) - avoid freq conflict, access point can switch to unused frequency, TPC (transmit power control) avoid conflict w/satellite services, access point determiners power output of the client
+• Frequency options
+- 2.4GHz
+- 5GHz
+- 6GHz
+- Band steering - many frequencies to choose from -> directs clients to best frequency
+• Service set identifier (SSID) - name of wireless network
+- Basic service set identifier
+(BSSID) - hardware address of an access point (MAC)
+- Extended service set identifier
+(ESSID)
+• Network types
+- Mesh networks - multiple access points
+- Ad hoc - uses 802.11 to directly communicate between 2 devices, IBSS (independent basic service set) - no access point required (USES: IoT Devices)
+- Point to point - two access points together (building to building, site to site) extends wired network over a distance
+- Infrastructure - clients communicate to an access point
+• Encryption
+- Wi-Fi Protected Access 2
+(WPA2) - CCMP (Counter Mode with Cipher Block Chaining Message Authentication Code Protocol) or CBC-MAC Protocol. AES Encryption and MIC (message integrity check)
+- WPA3 - uses Galois Message Authentication Code (GMAC) instead of CBC-MAC
+• Guest networks
+- Captive portals - authentication to network -> access table recognizes
+• Authentication
+- Pre-shared key (PSK) vs. Enterprise 
+• Antennas
+- Omnidirectional vs. directional - directional focuses in one direction (e.g. yagi or parabolic antenna)
+• Autonomous vs. lightweight
+access point - lightweight is in switch (less expensive)
+
+### 2.4 Explain important factors of physical installations.
+• Important installation implications
+- Locations
+o Intermediate distribution
+ frame (IDF) - extension of MDF
+o Main distribution frame (MDF) - central point of the network (usually data center)
+- Rack size - 19" rack/device width, Height is 1U or 1.75"
+- Port-side exhaust/intake
+- Cabling 
+o Patch panel
+o Fiber distribution panel - patch panel at both ends 
+- Lockable 
+• Power
+- Uninterruptible power supply
+(UPS)
+- Power distribution unit (PDU) -provide multiple power outlets
+- Power load
+- Voltage
+• Environmental factors
+- Humidity - high humidity (condensation) low humidity (static discharge) - ideally 40-60% 
+- Fire suppression - dont use water, tanks w/chem agent and dispersed
+- Temperature - optimal temp is 64 to 81 F (17-27 C)
